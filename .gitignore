@@ -1,0 +1,95 @@
+# Віртуальні середовища та залежності
+# (для pip, venv, poetry, pipenv, anaconda)
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.env
+.venv/
+Pipfile.lock
+poetry.lock
+
+# Байт-код Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Локальні файли налаштувань та секретів
+# Завжди додавайте сюди файл .env.local, якщо він містить паролі!
+.env*
+!.env.example
+
+# Артефакти збирання, пакування та дистрибуції
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.manifest
+*.spec
+
+# Логи та журнали
+logs/
+*.log
+*.sqlite
+*.db
+*.sqlite3
+
+# Покриття коду тестами та звіти
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytest_cache/
+cover/
+
+# Сміття від операційних систем (OS)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Налаштування редакторів коду (IDE) та проєктні файли
+# VS Code
+.vscode/
+.history/
+*.local
+*.code-workspace
+
+# PyCharm / JetBrains
+.idea/
+*.iws
+*.iml
+*.ipr
+*.pydevproject
+
+# Файли підсвічування синтаксису, робочі простори та інше
+.project
+.pybuilder/
+target/
+*.sublime-workspace
+*.sublime-project
+*.komodoproject
