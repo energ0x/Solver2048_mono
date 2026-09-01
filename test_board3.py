@@ -11,8 +11,6 @@ board = np.array([
 print("Testing board:")
 print(board)
 
-# Find best move
 best_move = expectimax.find_best_move(board, depth=10)
-
 DIRECTION_NAMES = {0: "UP", 1: "DOWN", 2: "LEFT", 3: "RIGHT"}
-print(f"Best move returned by C: {best_move} ({DIRECTION_NAMES.get(best_move, 'UNKNOWN')})")
+print(f"C solver via find_best_move returns: {best_move} ({DIRECTION_NAMES.get(best_move, 'UNKNOWN')})")

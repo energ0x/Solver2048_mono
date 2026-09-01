@@ -172,7 +172,13 @@ def _move_down(b):
     return n, sc
 
 
-_MOVES = [_move_up, _move_down, _move_left, _move_right]
+# Набір рухів (Порядок має відповідати controller.py: 0=UP, 1=DOWN, 2=LEFT, 3=RIGHT)
+_MOVES = [
+    _move_up,
+    _move_down,
+    _move_left,
+    _move_right
+]
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -339,44 +345,55 @@ def _expectimax(b, depth, is_player):
 # ПУБЛІЧНИЙ API
 # ═══════════════════════════════════════════════════════════════
 
+import os
+import ctypes
+
+_c_solver = None
+try:
+    so_path = os.path.join(os.path.dirname(__file__), "solver.so")
+    if os.path.exists(so_path):
+        _c_solver = ctypes.CDLL(so_path)
+        _c_solver.solver_find_best_move.argtypes = [ctypes.c_uint64, ctypes.c_int]
+        _c_solver.solver_find_best_move.restype = ctypes.c_int
+except Exception as e:
+    print(f"Попередження: не вдалося завантажити solver.so ({e}). Використовується повільна Python-версія.")
+
 def find_best_move(board_np, depth=3):
     """
     Знаходить найкращий хід для numpy дошки 4x4.
-
-    Динамічна глибина:
-    - 0–2 порожніх: depth 7 (мало гілок, критичні рішення)
-    - 3–4 порожніх: depth 6
-    - 5–7 порожніх: depth 5
-    - 8+  порожніх: depth 4
-    - 11+ порожніх: depth 3
-
-    Returns: 0=вгору, 1=вниз, 2=вліво, 3=вправо, або -1.
     """
-    global _TT
-    _TT = {}  # Очищаємо TT перед кожним ходом
+    if _c_solver:
+        # Для C-солвера використовуємо правильне C-кодування: i * 4
+        c_bb = 0
+        for r in range(4):
+            for c in range(4):
+                val = int(board_np[r, c])
+                if val > 0:
+                    log_val = val.bit_length() - 1
+                    c_bb |= (log_val << ((r * 4 + c) * 4))
+        
+        empty_cells = _count_empty(c_bb)
+        return _c_solver.solver_find_best_move(c_bb, empty_cells)
 
     bb = _np_to_bb(board_np)
-    empty = _count_empty(bb)
 
-    # Динамічна глибина
-    if empty <= 2:
-        d = max(depth, 7)
-    elif empty <= 4:
-        d = max(depth, 6)
-    elif empty <= 7:
-        d = max(depth, 5)
-    elif empty <= 10:
-        d = max(depth, 4)
-    else:
-        d = max(depth, 3)
+    # Fallback на Python
+    global _TT
+    _TT = {}
+    
+    empty = _count_empty(bb)
+    if empty <= 2: d = max(depth, 7)
+    elif empty <= 4: d = max(depth, 6)
+    elif empty <= 7: d = max(depth, 5)
+    elif empty <= 10: d = max(depth, 4)
+    else: d = max(depth, 3)
 
     best_val = -1e18
     best_move = -1
 
     for i, mf in enumerate(_MOVES):
         moved, _ = mf(bb)
-        if moved == bb:
-            continue
+        if moved == bb: continue
         val = _expectimax(moved, d - 1, False)
         if val > best_val:
             best_val = val
