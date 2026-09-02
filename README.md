@@ -23,7 +23,9 @@
 ---
 
 ## 🌟 Overview
-![Screenshot 2026-09-02 at 01.15.35.png](../../Desktop/Screenshot%202026-09-02%20at%2001.15.35.png)
+
+<img width="1408" height="881" alt="Screenshot 2026-09-02 at 01 15 35" src="https://github.com/user-attachments/assets/507c558b-171a-44b7-92e1-da1797b9a338" />
+
 This project is an end-to-end automated solver designed to play **2048** in real time inside macOS's native **iPhone Mirroring** window (or desktop emulators/web versions).
 
 Instead of relying on LLMs or slow generic screen-automation libraries, this project implements a **high-throughput hybrid architecture**:
