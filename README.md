@@ -54,28 +54,28 @@ This Bot (Anti-2048 farming):
 
 ```mermaid
 flowchart TD
-    subgraph macOS Environment
-        IPM[iPhone Mirroring — 2048 Game Window]
+    subgraph ME ["macOS Environment"]
+        IPM["iPhone Mirroring — 2048 Game Window"]
     end
 
-    subgraph Perception Layer
-        SC[macOS screencapture CLI] -->|Raw PNG| RD[Retina Scale Detector]
-        RD --> SP[8-Point Spatial Sampler]
-        SP --> MF[Median RGB Filter]
-        MF --> CM[ColorMapper: Euclidean Clustering]
-        CM -->|4×4 int matrix| BB[Bitboard Encoder]
+    subgraph PL ["Perception Layer"]
+        SC["macOS screencapture CLI"] -->|Raw PNG| RD["Retina Scale Detector"]
+        RD --> SP["8-Point Spatial Sampler"]
+        SP --> MF["Median RGB Filter"]
+        MF --> CM["ColorMapper: Euclidean Clustering"]
+        CM -->|4x4 int matrix| BB["Bitboard Encoder"]
     end
 
-    subgraph C99 Decision Engine — solver.so via ctypes
-        BB --> SM[solver_find_best_move]
-        SM --> LUT[65,536-Entry Row Lookup Tables]
-        SM --> EXP[Expectimax Search Tree]
-        EXP <--> TT[16M-Entry Transposition Table]
-        EXP --> EVAL[Heuristic Evaluator]
+    subgraph DE ["C99 Decision Engine (solver.so via ctypes)"]
+        BB --> SM["solver_find_best_move"]
+        SM --> LUT["65,536-Entry Row Lookup Tables"]
+        SM --> EXP["Expectimax Search Tree"]
+        EXP <--> TT["16M-Entry Transposition Table"]
+        EXP --> EVAL["Heuristic Evaluator"]
     end
 
-    subgraph Action Layer
-        SM -->|Direction 0=UP 1=DOWN 2=LEFT 3=RIGHT| CTRL[pyautogui Controller]
+    subgraph AL ["Action Layer"]
+        SM -->|Direction 0=UP 1=DOWN 2=LEFT 3=RIGHT| CTRL["pyautogui Controller"]
         CTRL -->|Synthetic Drag Gestures| IPM
     end
 
