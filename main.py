@@ -55,7 +55,7 @@ def main():
     print()
     print("╔══════════════════════════════════════╗")
     print("║       🎮 2048 SOLVER v1.0            ║")
-    print("║   iPhone Mirroring + Expectimax AI   ║")
+    print("║   iPhone Mirroring + Expectimax      ║")
     print("╚══════════════════════════════════════╝")
     print()
 
@@ -142,7 +142,7 @@ def main():
 
             if best_move == -1 or best_move not in [0, 1, 2, 3]:
                 # Аварійний хід — пробуємо всі напрямки по черзі
-                print(f"  ⚠ AI не знайшов хід, пробуємо аварійні...")
+                print(f"  ⚠ Солвер не знайшов хід, пробуємо аварійні...")
                 moved = False
                 for fb_move in fallback_moves:
                     from game_logic import move_board, board_changed
@@ -157,7 +157,7 @@ def main():
                     print(f"   Максимальна плитка: {max_tile}")
                     break
 
-            print(f"  🤖 AI: {DIRECTION_NAMES[best_move]}  ({elapsed:.2f}с)")
+            print(f"  ⚡ Solver: {DIRECTION_NAMES[best_move]}  ({elapsed:.2f}с)")
 
             # 5. Виконуємо свайп
             perform_swipe(

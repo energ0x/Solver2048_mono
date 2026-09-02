@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-2048 AI Benchmark — Anti-2048 Strategy
+2048 Solver Benchmark — Anti-2048 Strategy
 Компіляція C-солвера:
     gcc -O3 -shared -fPIC -o solver.so solver.c -lm
 """
@@ -152,7 +152,7 @@ def play_game(seed=None, verbose=False):
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("2048 AI Benchmark — Максимізація очок без досягнення 2048")
+    print("2048 Solver Benchmark — Максимізація очок без досягнення 2048")
     print("=" * 65)
 
     scores, moves_list, max_tiles, times = [], [], [], []
